@@ -2,9 +2,22 @@ import UpdateForm from "@/app/components/EditForm";
 import { getContactById } from "../../../lib/data";
 import { notFound } from "next/navigation";
 
-const UpdateContactPage = async ({ params }: { params: { id: string } }) => {
-  const id = params.id;
-  const contact = await getContactById(id);
+// Define the Contact type to match your database schema
+type Contact = {
+  id: string;
+  name: string | null;
+  phone: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const UpdateContactPage = async ({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) => {
+  const { id } = await params;
+  const contact: Contact | null = await getContactById(id);
 
   if (!contact) {
     notFound();

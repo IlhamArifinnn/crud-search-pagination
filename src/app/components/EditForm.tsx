@@ -3,7 +3,15 @@
 import { UpdateContact } from "../lib/actions";
 import { useActionState } from "react";
 import { SubmitButton } from "./Buttons";
-import type { Contact } from "@prisma/client";
+
+// Define the Contact type manually (matching database schema)
+type Contact = {
+  id: string;
+  name: string | null;
+  phone: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
 
 const UpdateForm = ({ contact }: { contact: Contact }) => {
   const UpdateContactWithId = UpdateContact.bind(null, contact.id);
@@ -24,7 +32,7 @@ const UpdateForm = ({ contact }: { contact: Contact }) => {
           id="name"
           className="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded focus:ring-blue-500 focus:border-blue-500 block w-full p-3"
           placeholder="Full Name..."
-          defaultValue={contact.name}
+          defaultValue={contact.name || ""}
         />
         <div id="name-error" aria-live="polite" aria-atomic="true">
           <p className="mt-2 text-sm text-red-500">{state?.Error?.name}</p>
