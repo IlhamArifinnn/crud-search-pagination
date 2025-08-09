@@ -30,7 +30,7 @@ export const getContacts = async (query: string, currentPage: number) => {
     });
     return contacts;
   } catch (error) {
-    throw new Error("Failed to Fetch contact data");
+    throw new Error(`Failed to Fetch contact data. ${error}`);
   }
 };
 
@@ -41,7 +41,7 @@ export const getContactById = async (id: string) => {
     });
     return contact;
   } catch (error) {
-    throw new Error("Failed to Fetch contact data");
+    throw new Error(`Failed to Fetch contact data. ${error}`);
   }
 };
 
@@ -68,6 +68,6 @@ export const getContactPages = async (query: string) => {
     const totalPages = Math.ceil(Number(contacts) / ITEMS_PER_PAGE);
     return totalPages;
   } catch (error) {
-    throw new Error("Failed to Fetch contact data");
+    throw new Error(`Failed to Fetch contact data. ${error}`);
   }
 };

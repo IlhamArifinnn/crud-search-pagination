@@ -28,7 +28,7 @@ export const saveContact = async (prevState: any, formData: FormData) => {
       },
     });
   } catch (error) {
-    return { message: "Failed to create contact" };
+    return { message: `Failed to create contact: ${error}` };
   }
 
   revalidatePath("/contacts");
@@ -58,7 +58,7 @@ export const UpdateContact = async (
       where: { id },
     });
   } catch (error) {
-    return { message: "Failed to update contact" };
+    return { message: `Failed to update contact: ${error}` };
   }
 
   revalidatePath("/contacts");
