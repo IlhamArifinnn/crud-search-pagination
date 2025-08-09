@@ -5,6 +5,7 @@ import { IoAddSharp, IoPencil, IoTrashOutline } from "react-icons/io5";
 import { useFormStatus } from "react-dom";
 import clsx from "clsx";
 import { DeleteContact } from "../lib/actions";
+import Swal from "sweetalert2";
 
 export const CreateButton = () => {
   return (
@@ -33,8 +34,32 @@ export const DeleteButton = ({ id }: { id: string }) => {
   const DeleteContactWithId = DeleteContact.bind(null, id);
 
   return (
-    <form action={DeleteContactWithId}>
-      <button className="rounded border p-1 hover:bg-red-200">
+    <form action={DeleteContactWithId} onSubmit={(e) => e.preventDefault()}>
+      <button
+        type="button" // penting! jangan biarkan default submit
+        className="rounded border p-1 hover:bg-red-200"
+        onClick={() => {
+          Swal.fire({
+            title: "Apakah kamu yakin menghapus data ini?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Hapus!",
+            cancelButtonText: "Batal!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              // jalankan aksi delete manual
+              DeleteContactWithId();
+              Swal.fire({
+                title: "Hapus!",
+                text: "Data berhasil dihapus.",
+                icon: "success",
+              });
+            }
+          });
+        }}
+      >
         <IoTrashOutline size={20} />
       </button>
     </form>
